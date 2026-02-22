@@ -2,7 +2,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
-
 // Import all route files
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -16,7 +15,9 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: ["https://dropifystore.netlify.app", "http://localhost:5173"],
+  origin: 'https://dropifystore.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 app.use(express.json());
