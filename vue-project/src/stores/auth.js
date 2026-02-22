@@ -5,6 +5,9 @@ import axios from 'axios'
 import { useCartStore } from './cart'
 import { useNotificationStore } from './notification'
 
+// REPLACE THIS URL WITH YOUR RENDER URL
+const API_BASE_URL = 'https://6wcserver-wd303-dropify.onrender.com'; 
+
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const token = ref(null)
@@ -15,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(username, password, isAdminLogin = false) {
     const notificationStore = useNotificationStore();
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      const { data } = await axios.post(`${API_BASE_URL}/api/auth/login`, { username, password });
       
       if (isAdminLogin && !data.isAdmin) {
         notificationStore.showNotification('Login failed: You do not have admin privileges.', 'error');
@@ -43,7 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function register(username, password) {
     const notificationStore = useNotificationStore();
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/register', { username, password });
+      const { data } = await axios.post(`${API_BASE_URL}/api/auth/register`, { username, password });
       
       token.value = data.token;
       user.value = { id: data._id, username: data.username, isAdmin: data.isAdmin };
@@ -60,9 +63,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-
   function logout() {
-
     user.value = null;
     token.value = null;
     router.push('/login');

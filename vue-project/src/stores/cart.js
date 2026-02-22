@@ -3,6 +3,9 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from './auth'
 
+// REPLACE THIS URL WITH YOUR RENDER URL
+const API_BASE_URL = 'https://6wcserver-wd303-dropify.onrender.com';
+
 export const useCartStore = defineStore('cart', () => {
   const items = ref([])
 
@@ -27,7 +30,7 @@ export const useCartStore = defineStore('cart', () => {
     const authStore = useAuthStore();
     if (!authStore.isLoggedIn) return;
     try {
-      const { data } = await axios.get('http://localhost:5000/api/cart', getAuthConfig());
+      const { data } = await axios.get(`${API_BASE_URL}/api/cart`, getAuthConfig());
       items.value = data;
     } catch (error) {
       console.error("Failed to fetch cart:", error);
@@ -37,7 +40,7 @@ export const useCartStore = defineStore('cart', () => {
 
   async function addToCart(product) {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/cart', {
+      const { data } = await axios.post(`${API_BASE_URL}/api/cart`, {
         productId: product._id,
         quantity: 1,
       }, getAuthConfig());
@@ -54,7 +57,7 @@ export const useCartStore = defineStore('cart', () => {
       return;
     }
     try {
-      const { data } = await axios.put('http://localhost:5000/api/cart', {
+      const { data } = await axios.put(`${API_BASE_URL}/api/cart`, {
         productId,
         quantity: quantity,
       }, getAuthConfig());
@@ -84,7 +87,7 @@ export const useCartStore = defineStore('cart', () => {
   
   async function removeFromCart(productId) {
     try {
-      const { data } = await axios.delete(`http://localhost:5000/api/cart/${productId}`, getAuthConfig());
+      const { data } = await axios.delete(`${API_BASE_URL}/api/cart/${productId}`, getAuthConfig());
       items.value = data;
     } catch (error) {
       console.error("Failed to remove from cart:", error);
@@ -93,11 +96,10 @@ export const useCartStore = defineStore('cart', () => {
   
   async function clearCart() {
     try {
-      const { data } = await axios.delete('http://localhost:5000/api/cart', getAuthConfig());
-      items.value = data; // The backend will return an empty array
+      const { data } = await axios.delete(`${API_BASE_URL}/api/cart`, getAuthConfig());
+      items.value = data; 
     } catch (error) {
       console.error("Failed to clear cart:", error);
-      // As a fallback, clear the local state anyway
       items.value = [];
     }
   }

@@ -8,7 +8,7 @@ const featuredProducts = ref([]);
 
 const fetchFeaturedProducts = async () => {
   try {
-    const { data } = await axios.get('http://localhost:5000/api/products');
+    const { data } = await axios.get('https://6wcserver-wd303-dropify.onrender.com/api/products');
     
     featuredProducts.value = data.products.slice(0, 4);
 
