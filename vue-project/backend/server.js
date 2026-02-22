@@ -15,10 +15,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: 'https://dropifystore.netlify.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  origin: 'https://dropifystore.netlify.app'
 }));
 app.use(express.json());
 
