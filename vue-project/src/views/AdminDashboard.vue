@@ -27,7 +27,7 @@ const fetchProducts = async () => {
     params.append('page', page.value);
     params.append('limit', limit.value);
 
-    const { data } = await axios.get(`https://6wcserver-wd303-dropify.onrender.com/api/products?${params.toString()}`);
+    const { data } = await axios.get(`https://sixwcserver-wd303-dropify.onrender.com/api/products?${params.toString()}`);
     
     products.value = data.products;
     page.value = data.page;

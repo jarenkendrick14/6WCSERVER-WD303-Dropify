@@ -21,7 +21,7 @@ const fetchShirts = async () => {
       params.append('sort', sortBy.value);
     }
     
-    const { data } = await axios.get(`http://localhost:5000/api/products?${params.toString()}`);
+    const { data } = await axios.get(`https://sixwcserver-wd303-dropify.onrender.com/api/products?${params.toString()}`);
     shirts.value = data.products;
   } catch (error) {
     console.error('Failed to fetch shirts:', error);
