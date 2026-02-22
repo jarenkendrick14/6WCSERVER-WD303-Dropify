@@ -6,7 +6,7 @@ import { useCartStore } from './cart'
 import { useNotificationStore } from './notification'
 
 // REPLACE THIS URL WITH YOUR RENDER URL
-const API_BASE_URL = 'https://6wcserver-wd303-dropify.onrender.com'; 
+const API_BASE_URL = 'https://sixwcserver-wd303-dropify.onrender.com'; 
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
