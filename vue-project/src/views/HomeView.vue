@@ -2,13 +2,14 @@
 import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 import ProductCard from '../components/ProductCard.vue';
 
 const featuredProducts = ref([]);
 
 const fetchFeaturedProducts = async () => {
   try {
-    const { data } = await axios.get('https://6wcserver-wd303-dropify.onrender.com/api/products');
+    const { data } = await axios.get(`${API_BASE_URL}/api/products`);
     
     featuredProducts.value = data.products.slice(0, 4);
 

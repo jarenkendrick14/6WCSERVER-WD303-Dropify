@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import API_BASE_URL from '../../config/api';
 import ProductCard from '../../components/ProductCard.vue';
 
 const hoodies = ref([]);
@@ -21,7 +22,7 @@ const fetchHoodies = async () => {
       params.append('sort', sortBy.value);
     }
     
-    const { data } = await axios.get(`https://sixwcserver-wd303-dropify.onrender.com/api/products?${params.toString()}`);
+    const { data } = await axios.get(`${API_BASE_URL}/api/products?${params.toString()}`);
     hoodies.value = data.products;
   } catch (error) {
     console.error('Failed to fetch hoodies:', error);

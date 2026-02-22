@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 import { useAuthStore } from '../stores/auth';
 
 const authStore = useAuthStore();
@@ -23,7 +24,7 @@ const fetchUsers = async () => {
       headers: { Authorization: `Bearer ${authStore.token}` },
       params: params
     };
-    const { data } = await axios.get('http://localhost:5000/api/users', config);
+    const { data } = await axios.get(`${API_BASE_URL}/api/users`, config);
     users.value = data;
   } catch (error) {
     console.error("Failed to fetch users:", error);
@@ -55,7 +56,7 @@ const toggleAdminStatus = async (user) => {
   if (confirm(`Are you sure you want to ${newStatus ? 'promote' : 'demote'} ${user.username}?`)) {
     try {
       const config = { headers: { Authorization: `Bearer ${authStore.token}` } };
-      await axios.put(`http://localhost:5000/api/users/${user._id}`, { isAdmin: newStatus }, config);
+      await axios.put(`${API_BASE_URL}/api/users/${user._id}`, { isAdmin: newStatus }, config);
       fetchUsers();
     } catch (error) {
       console.error("Failed to update user role:", error);
@@ -72,7 +73,7 @@ const deleteUser = async (user) => {
   if (confirm(`Are you sure you want to permanently delete the user ${user.username}? This action cannot be undone.`)) {
     try {
       const config = { headers: { Authorization: `Bearer ${authStore.token}` } };
-      await axios.delete(`http://localhost:5000/api/users/${user._id}`, config);
+      await axios.delete(`${API_BASE_URL}/api/users/${user._id}`, config);
       fetchUsers();
     } catch (error) {
       console.error("Failed to delete user:", error);

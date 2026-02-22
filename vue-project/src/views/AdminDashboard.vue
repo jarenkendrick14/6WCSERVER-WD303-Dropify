@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 import { useAuthStore } from '../stores/auth';
 
 const authStore = useAuthStore();
@@ -27,7 +28,7 @@ const fetchProducts = async () => {
     params.append('page', page.value);
     params.append('limit', limit.value);
 
-    const { data } = await axios.get(`https://sixwcserver-wd303-dropify.onrender.com/api/products?${params.toString()}`);
+    const { data } = await axios.get(`${API_BASE_URL}/api/products?${params.toString()}`);
     
     products.value = data.products;
     page.value = data.page;
@@ -90,9 +91,9 @@ const saveProduct = async () => {
   };
   try {
     if (editingProduct.value._id) {
-      await axios.put(`http://localhost:5000/api/products/${editingProduct.value._id}`, editingProduct.value, config);
+      await axios.put(`${API_BASE_URL}/api/products/${editingProduct.value._id}`, editingProduct.value, config);
     } else {
-      await axios.post('http://localhost:5000/api/products', editingProduct.value, config);
+      await axios.post(`${API_BASE_URL}/api/products`, editingProduct.value, config);
     }
     closeModal();
     fetchProducts(); // Refresh the list
@@ -107,7 +108,7 @@ const deleteProduct = async (productId) => {
       headers: { Authorization: `Bearer ${authStore.token}` },
     };
     try {
-      await axios.delete(`http://localhost:5000/api/products/${productId}`, config);
+      await axios.delete(`${API_BASE_URL}/api/products/${productId}`, config);
       fetchProducts(); // Refresh the list
     } catch (error) {
       console.error("Failed to delete product:", error);

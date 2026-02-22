@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 import { useAuthStore } from '../stores/auth';
 
 const authStore = useAuthStore();
@@ -24,7 +25,7 @@ const fetchOrders = async () => {
       headers: { Authorization: `Bearer ${authStore.token}` },
       params: params
     };
-    const { data } = await axios.get('http://localhost:5000/api/orders', config);
+    const { data } = await axios.get(`${API_BASE_URL}/api/orders`, config);
     orders.value = data;
   } catch (error) {
     console.error("Failed to fetch orders:", error);
@@ -54,7 +55,7 @@ const updateStatus = async () => {
   try {
     const config = { headers: { Authorization: `Bearer ${authStore.token}` } };
     await axios.put(
-      `http://localhost:5000/api/orders/${selectedOrder.value._id}/status`,
+      `${API_BASE_URL}/api/orders/${selectedOrder.value._id}/status`,
       { status: selectedOrder.value.status },
       config
     );
@@ -70,7 +71,7 @@ const deleteOrder = async (orderId) => {
   if (confirm('Are you sure you want to permanently delete this order? This action cannot be undone.')) {
     try {
       const config = { headers: { Authorization: `Bearer ${authStore.token}` } };
-      await axios.delete(`http://localhost:5000/api/orders/${orderId}`, config);
+      await axios.delete(`${API_BASE_URL}/api/orders/${orderId}`, config);
       closeModal();
       fetchOrders();
     } catch (error) {

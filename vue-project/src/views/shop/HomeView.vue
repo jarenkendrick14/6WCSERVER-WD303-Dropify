@@ -2,13 +2,14 @@
 import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 import axios from 'axios';
-import ProductCard from '../components/ProductCard.vue';
+import API_BASE_URL from '../../config/api';
+import ProductCard from '../../components/ProductCard.vue';
 
 const featuredProducts = ref([]);
 
 const fetchFeaturedProducts = async () => {
   try {
-    const { data } = await axios.get('http://localhost:5000/api/products');
+    const { data } = await axios.get(`${API_BASE_URL}/api/products`);
     featuredProducts.value = data.products.slice(0, 4);
   } catch (error) {
     console.error("Failed to fetch featured products:", error);

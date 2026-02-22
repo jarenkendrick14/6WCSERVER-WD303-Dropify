@@ -2,9 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from './auth'
-
-// REPLACE THIS URL WITH YOUR RENDER URL
-const API_BASE_URL = 'https://sixwcserver-wd303-dropify.onrender.com';
+import API_BASE_URL from '../config/api'
 
 export const useCartStore = defineStore('cart', () => {
   const items = ref([])

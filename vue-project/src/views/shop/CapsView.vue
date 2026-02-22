@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import API_BASE_URL from '../../config/api';
 import ProductCard from '../../components/ProductCard.vue';
 
 const caps = ref([]);
@@ -21,7 +22,7 @@ const fetchCaps = async () => {
       params.append('sort', sortBy.value);
     }
     
-    const { data } = await axios.get(`https://sixwcserver-wd303-dropify.onrender.com/api/products?${params.toString()}`);
+    const { data } = await axios.get(`${API_BASE_URL}/api/products?${params.toString()}`);
     caps.value = data.products;
   } catch (error) {
     console.error('Failed to fetch caps:', error);

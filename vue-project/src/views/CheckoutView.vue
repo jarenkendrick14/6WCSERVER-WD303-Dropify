@@ -5,6 +5,7 @@ import { useAuthStore } from '../stores/auth';
 import { useNotificationStore } from '../stores/notification';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
@@ -50,7 +51,7 @@ async function placeOrder() {
 
   try {
     const config = { headers: { Authorization: `Bearer ${authStore.token}` } };
-    const { data: createdOrder } = await axios.post('http://localhost:5000/api/orders', orderData, config);
+    const { data: createdOrder } = await axios.post(`${API_BASE_URL}/api/orders`, orderData, config);
 
     notificationStore.showNotification('Thank you for your order! It has been placed successfully.');
     
