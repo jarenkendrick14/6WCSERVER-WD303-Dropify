@@ -297,13 +297,17 @@ function handleAddToCart() {
 }
 .back-btn:hover { border-color: var(--white); color: var(--white); }
 
-/* Responsive */
 @media (max-width: 900px) {
-  .detail-layout {
-    grid-template-columns: 1fr;
-  }
+  .detail-layout { grid-template-columns: 1fr; }
   .detail-image-col { position: relative; top: 0; }
-  .detail-info-col { padding: 40px 24px; }
-  .loading-screen { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+  .detail-info-col { padding: 32px 20px; }
+  .loading-screen { grid-template-columns: 1fr; padding: 100px 20px 60px; }
+  .detail-name { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .detail-info-col { padding: 24px 16px; }
+  .size-grid { gap: 6px; }
+  .size-btn { min-width: 44px; height: 40px; font-size: 0.72rem; }
 }
 </style>

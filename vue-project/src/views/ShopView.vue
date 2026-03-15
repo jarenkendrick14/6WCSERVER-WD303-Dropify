@@ -13,4 +13,8 @@
   background-color: var(--black);
   min-height: 100vh;
 }
+
+@media (max-width: 768px) {
+  .shop-container { padding: 80px 16px 60px; }
+}
 </style>

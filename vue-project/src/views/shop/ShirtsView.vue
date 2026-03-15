@@ -173,4 +173,14 @@ onMounted(fetchShirts);
 
 .stagger-enter-active { transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1); }
 .stagger-enter-from { opacity: 0; transform: translateY(20px); }
+
+@media (max-width: 768px) {
+  .page-header { margin-bottom: 28px; padding-bottom: 20px; }
+  .page-title { font-size: 2.5rem; }
+  .filter-bar { gap: 10px; }
+  .search-wrap { width: 100%; }
+  .sort-select { width: 100%; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .loading-grid { grid-template-columns: repeat(2, 1fr); }
+}
 </style>

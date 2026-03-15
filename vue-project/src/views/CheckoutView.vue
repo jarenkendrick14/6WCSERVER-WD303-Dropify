@@ -310,8 +310,9 @@ input:focus { border-color: var(--gold); }
 .place-btn:disabled { background-color: var(--border); color: var(--gray); cursor: not-allowed; }
 
 @media (max-width: 768px) {
-  .checkout-layout { grid-template-columns: 1fr; }
-  .checkout-view { padding: 80px 24px 60px; }
+  .checkout-view { padding: 80px 16px 60px; }
+  .checkout-layout { grid-template-columns: 1fr; gap: 32px; }
+  .checkout-title { font-size: 2rem; }
   .field-row { grid-template-columns: 1fr; }
 }
 </style>

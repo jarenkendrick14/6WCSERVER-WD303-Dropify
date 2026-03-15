@@ -105,6 +105,11 @@
 }
 
 @media (max-width: 768px) {
-  .footer-inner { grid-template-columns: 1fr; padding: 40px 24px; }
+  .footer-inner {
+    grid-template-columns: 1fr;
+    padding: 40px 24px;
+    gap: 32px;
+  }
+  .footer-bottom { padding: 14px 24px; }
 }
 </style>

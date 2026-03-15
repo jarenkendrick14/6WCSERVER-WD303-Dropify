@@ -9,7 +9,7 @@ const featuredProducts = ref([]);
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get(`${API_BASE_URL}/api/products`);
+    const { data } = await axios.get(`${API_BASE_URL}/api/products?limit=4`);
     featuredProducts.value = data.products.slice(0, 4);
   } catch (e) {
     console.error('Failed to fetch featured products:', e);

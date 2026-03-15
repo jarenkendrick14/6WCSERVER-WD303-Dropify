@@ -328,8 +328,25 @@ const handleQuantityInput = (productId, event) => {
 .checkout-btn:hover { background-color: var(--gold-light); }
 
 @media (max-width: 768px) {
-  .cart-body { grid-template-columns: 1fr; }
-  .cart-view { padding: 80px 24px 60px; }
-  .cart-header-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .cart-view { padding: 80px 16px 60px; }
+  .cart-body { grid-template-columns: 1fr; gap: 32px; }
+  .cart-header-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .cart-title { font-size: 2rem; }
+  .cart-col-headers { display: none; }
+  .cart-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    position: relative;
+    padding: 20px 0;
+  }
+  .product-col { flex-direction: row; }
+  .item-img { width: 64px; height: 64px; }
+  .qty-col { justify-content: flex-start; }
+  .total-col { text-align: left; }
+  .remove-col {
+    position: absolute;
+    top: 20px; right: 0;
+    justify-content: flex-end;
+  }
 }
 </style>

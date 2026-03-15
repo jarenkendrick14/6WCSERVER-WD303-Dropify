@@ -185,8 +185,13 @@ input:focus, textarea:focus { border-color: var(--gold); }
 .social-link:hover { color: var(--gold); }
 
 @media (max-width: 768px) {
-  .contact-body { grid-template-columns: 1fr; gap: 48px; }
-  .contact-header { padding: 120px 24px 48px; }
-  .contact-body { padding: 48px 24px 80px; }
+  .contact-header { padding: 100px 20px 40px; }
+  .contact-title { font-size: 3rem; }
+  .contact-body { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px 60px; }
+  .submit-btn { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .contact-title { font-size: 2.2rem; }
 }
 </style>

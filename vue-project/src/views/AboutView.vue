@@ -112,8 +112,12 @@
 .about-cta:hover { color: var(--gold-light); border-color: var(--gold-light); }
 
 @media (max-width: 768px) {
-  .about-body { grid-template-columns: 1fr; gap: 40px; }
-  .about-hero { padding: 120px 24px 60px; }
-  .about-body { padding: 60px 24px; }
+  .about-hero { padding: 100px 20px 48px; }
+  .about-title { font-size: 3rem; }
+  .about-body { grid-template-columns: 1fr; gap: 32px; padding: 48px 20px 60px; }
+}
+
+@media (max-width: 480px) {
+  .about-title { font-size: 2.2rem; }
 }
 </style>

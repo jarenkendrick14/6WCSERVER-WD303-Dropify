@@ -6,6 +6,8 @@ import { useCartStore } from './stores/cart'
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue'
 import Notification from './components/Notification.vue';
+import axios from 'axios';
+import API_BASE_URL from './config/api';
 
 const route = useRoute()
 const authStore = useAuthStore()
@@ -19,24 +21,19 @@ onMounted(() => {
   if (authStore.isLoggedIn) {
     cartStore.fetchCart();
   }
+  // Warm up Railway backend to avoid cold-start delay
+  axios.get(`${API_BASE_URL}/`).catch(() => {});
 });
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 
 const isAuthPage = computed(() => route.name === 'login' || route.name === 'register');
-
-// We use the route key to help Vue's transition component
-// differentiate between pages and trigger the animation.
 const routeKey = computed(() => route.path);
 
-// --- Header logic (unchanged) ---
 const isShopPage = computed(() => route.path.startsWith('/shop') || route.path.startsWith('/product'));
 const isAdminPage = computed(() => route.path.startsWith('/admin'));
-const hasLightBackground = computed(() => {
-  const lightBgPaths = ['/about', '/contact', '/cart', '/checkout'];
-  return lightBgPaths.includes(route.path);
-});
+const hasLightBackground = computed(() => ['/about', '/contact', '/cart', '/checkout'].includes(route.path));
 const headerMode = computed(() => {
   if (isAdminPage.value) return 'admin';
   if (isShopPage.value) return 'shop';
@@ -46,21 +43,21 @@ const headerMode = computed(() => {
 
 <template>
   <div class="app-container">
-    <TheHeader 
+    <TheHeader
       v-if="!isAuthPage"
-      :mode="headerMode" 
-      :dark-text="hasLightBackground" 
-      :scrolled="scrolled" 
+      :mode="headerMode"
+      :dark-text="hasLightBackground"
+      :scrolled="scrolled"
     />
-    
+
     <main>
       <RouterView v-slot="{ Component }">
-        <Transition name="fade" mode="out-in">
+        <Transition name="page" mode="out-in">
           <component :is="Component" :key="routeKey" />
         </Transition>
       </RouterView>
     </main>
-    
+
     <TheFooter v-if="!isAuthPage && !isAdminPage" />
     <Notification />
   </div>
@@ -80,21 +77,22 @@ main {
   padding-top: var(--header-h);
 }
 
-/* On login/register pages, remove the padding. */
-.app-container:has(main > .login-view),
-.app-container:has(main > .register-view) {
-  main {
-    padding-top: 0;
-  }
+.app-container:has(main > .auth-view) main {
+  padding-top: 0;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease;
+/* Page transition — slide up + fade */
+.page-enter-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
-.fade-enter-from,
-.fade-leave-to {
+.page-leave-active {
+  transition: opacity 0.2s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.page-leave-to {
   opacity: 0;
 }
 </style>
