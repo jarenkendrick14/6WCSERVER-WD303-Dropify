@@ -1,33 +1,42 @@
-/* Color Palette from Mockup */
+/* ============================================================
+   DROPIFY — Design System
+   ============================================================ */
 :root {
-  --carmell-red: #BA1B1D;
-  --selective-yellow: #FFB60A;
-  --gray: #7C7C7C;
-  --white: #FFFFFF;
-  --smoky-black: #0B0A07;
+  --black:       #0A0A0A;
+  --surface:     #111111;
+  --surface-2:   #1A1A1A;
+  --border:      #272727;
+  --gold:        #C9A96E;
+  --gold-light:  #E2C9A0;
+  --red:         #D42B2B;
+  --white:       #F5F0EB;
+  --gray:        #888888;
+  --gray-light:  #B5B5B5;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  --radius:      0px;
+  --transition:  0.3s ease;
+  --header-h:    72px;
 }
 
-/* Global Reset & Base Styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* --- ADD THIS RULE --- */
-/* This forces the scrollbar to always be present, preventing the page from "jumping" */
-/* when navigating between short pages (like Home) and long pages (like Shop). */
 html {
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Share Tech Mono', monospace;
-  background-color: var(--white);
-  color: var(--smoky-black);
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  background-color: var(--black);
+  color: var(--white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 #app {
@@ -48,13 +57,11 @@ a {
 }
 
 button {
-  font-family: 'Share Tech Mono', monospace;
-  text-transform: uppercase;
+  font-family: var(--font-body);
   cursor: pointer;
   border: none;
 }
 
-input, textarea {
-  font-family: 'Share Tech Mono', monospace;
-  text-transform: uppercase;
+input, textarea, select {
+  font-family: var(--font-body);
 }

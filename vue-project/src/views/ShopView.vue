@@ -6,9 +6,11 @@
 
 <style scoped>
 .shop-container {
-  padding: 60px 40px;
+  padding: 100px 48px 80px;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
+  background-color: var(--black);
+  min-height: 100vh;
 }
 </style>

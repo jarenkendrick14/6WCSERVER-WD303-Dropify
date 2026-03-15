@@ -4,53 +4,59 @@ const notificationStore = useNotificationStore();
 </script>
 
 <template>
-  <!-- Use a <Transition> for a smooth fade-in/fade-out effect -->
-  <Transition name="fade">
-    <div 
-      v-if="notificationStore.isVisible" 
-      class="notification-toast"
+  <Transition name="slide-up">
+    <div
+      v-if="notificationStore.isVisible"
+      class="toast"
       :class="notificationStore.type"
       @click="notificationStore.hideNotification"
     >
+      <span class="toast-dot"></span>
       {{ notificationStore.message }}
     </div>
   </Transition>
 </template>
 
 <style scoped>
-.notification-toast {
+.toast {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 15px 25px;
-  border-radius: 8px;
+  bottom: 32px;
+  right: 32px;
+  padding: 14px 22px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
   color: var(--white);
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
   cursor: pointer;
   z-index: 1000;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
 }
 
-/* Style for success messages */
-.notification-toast.success {
-  background-color: #28a745; /* Green */
+.toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
-/* Style for error messages */
-.notification-toast.error {
-  background-color: #dc3545; /* Red */
-}
+.toast.success { border-left: 3px solid #22c55e; }
+.toast.success .toast-dot { background-color: #22c55e; }
 
-/* Vue Transition classes */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
+.toast.error { border-left: 3px solid var(--red); }
+.toast.error .toast-dot { background-color: var(--red); }
 
-.fade-enter-from,
-.fade-leave-to {
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
 }
 </style>

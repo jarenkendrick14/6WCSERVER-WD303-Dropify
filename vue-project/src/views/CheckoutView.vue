@@ -25,12 +25,10 @@ const isLoading = ref(false);
 async function placeOrder() {
   if (cartStore.items.length === 0) {
     notificationStore.showNotification('Your cart is empty.', 'error');
-    router.push('/shop'); // Redirect to shop if cart is empty
+    router.push('/shop');
     return;
   }
-  
   isLoading.value = true;
-
   const orderData = {
     orderItems: cartStore.items.map(item => ({
       _id: item.product._id,
@@ -48,24 +46,14 @@ async function placeOrder() {
     },
     totalPrice: cartStore.cartTotal,
   };
-
   try {
     const config = { headers: { Authorization: `Bearer ${authStore.token}` } };
-    const { data: createdOrder } = await axios.post(`${API_BASE_URL}/api/orders`, orderData, config);
-
-    notificationStore.showNotification('Thank you for your order! It has been placed successfully.');
-    
-    // The backend now clears the DB cart, so we just clear the local state
-    // We can fetch the (now empty) cart to be perfectly in sync
+    await axios.post(`${API_BASE_URL}/api/orders`, orderData, config);
+    notificationStore.showNotification('Order placed successfully!');
     await cartStore.fetchCart();
-
-    // Optionally, redirect to an order success page in the future
-    // For now, redirect home
     router.push({ name: 'home' });
-
   } catch (error) {
-    console.error("Failed to place order:", error);
-    notificationStore.showNotification(error.response?.data?.message || 'Failed to place order. Please try again.', 'error');
+    notificationStore.showNotification(error.response?.data?.message || 'Failed to place order.', 'error');
   } finally {
     isLoading.value = false;
   }
@@ -74,131 +62,256 @@ async function placeOrder() {
 
 <template>
   <div class="checkout-view">
-    <h1>CHECKOUT</h1>
+    <div class="checkout-header">
+      <p class="eyebrow">Almost There</p>
+      <h1 class="checkout-title">Checkout</h1>
+    </div>
+
     <div class="checkout-layout">
-      
-      <div class="shipping-details">
-        <h2>SHIPPING DETAILS</h2>
+      <div class="shipping-section">
+        <p class="section-label">Shipping Details</p>
         <form @submit.prevent="placeOrder" id="checkout-form">
-          <div class="form-group">
-            <label for="name">FULL NAME</label>
-            <input type="text" id="name" v-model="form.name" required>
+          <div class="field">
+            <label>Full Name</label>
+            <input type="text" v-model="form.name" required />
           </div>
-          <div class="form-group">
-            <label for="email">EMAIL ADDRESS</label>
-            <input type="email" id="email" v-model="form.email" required>
+          <div class="field">
+            <label>Email Address</label>
+            <input type="email" v-model="form.email" required />
           </div>
-          <div class="form-group">
-            <label for="address">STREET ADDRESS</label>
-            <input type="text" id="address" v-model="form.address" required>
+          <div class="field">
+            <label>Street Address</label>
+            <input type="text" v-model="form.address" required />
           </div>
-          <div class="form-group">
-            <label for="city">CITY</label>
-            <input type="text" id="city" v-model="form.city" required>
-          </div>
-          <div class="form-group">
-            <label for="postal-code">POSTAL CODE</label>
-            <input type="text" id="postal-code" v-model="form.postalCode" required>
+          <div class="field-row">
+            <div class="field">
+              <label>City</label>
+              <input type="text" v-model="form.city" required />
+            </div>
+            <div class="field">
+              <label>Postal Code</label>
+              <input type="text" v-model="form.postalCode" required />
+            </div>
           </div>
         </form>
       </div>
 
-      <div class="order-summary">
-        <h2>YOUR ORDER</h2>
-        <div class="summary-items">
-          <div v-for="item in cartStore.items" :key="item.product._id" class="summary-item">
-            <span>{{ item.product.name }} (x{{ item.quantity }})</span>
-            <span>₱ {{ (item.product.price * item.quantity).toFixed(2) }}</span>
+      <div class="order-section">
+        <p class="section-label">Your Order</p>
+        <div class="order-items">
+          <div v-for="item in cartStore.items" :key="item.product._id" class="order-item">
+            <div class="order-item-left">
+              <img :src="item.product.image" :alt="item.product.name" class="order-img" />
+              <div>
+                <p class="order-item-name">{{ item.product.name }}</p>
+                <p class="order-item-qty">Qty: {{ item.quantity }}</p>
+              </div>
+            </div>
+            <p class="order-item-price">₱{{ (item.product.price * item.quantity).toFixed(2) }}</p>
           </div>
         </div>
-        <div class="summary-total">
-          <strong>TOTAL</strong>
-          <strong>₱ {{ cartStore.cartTotal.toFixed(2) }}</strong>
+        <div class="order-total">
+          <span>Total</span>
+          <span class="total-val">₱{{ cartStore.cartTotal.toFixed(2) }}</span>
         </div>
-        <button type="submit" form="checkout-form" class="place-order-button" :disabled="isLoading">
-          {{ isLoading ? 'PLACING ORDER...' : 'PLACE ORDER' }}
+        <button type="submit" form="checkout-form" class="place-btn" :disabled="isLoading">
+          {{ isLoading ? 'Placing Order...' : 'Place Order' }}
         </button>
       </div>
-
     </div>
   </div>
 </template>
 
 <style scoped>
 .checkout-view {
-  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 40px;
-  flex-grow: 1;
+  padding: 100px 48px 80px;
+  color: var(--white);
+  background-color: var(--black);
+  min-height: 100vh;
 }
-h1, h2 {
-  font-weight: normal;
+
+.checkout-header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 30px;
+  color: var(--gold);
+  margin-bottom: 10px;
 }
+
+.checkout-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
 .checkout-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1.4fr 1fr;
   gap: 60px;
+  align-items: start;
 }
-.form-group {
-  margin-bottom: 25px;
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
 }
-.form-group label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 0.8rem;
-}
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  font-size: 1rem;
-}
-.order-summary {
-  background-color: #f9f9f9;
-  padding: 30px;
-}
-.summary-item {
+
+.shipping-section form {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 15px 0;
-  border-bottom: 1px solid #eee;
-  gap: 15px;
+  flex-direction: column;
+  gap: 20px;
 }
-.summary-item span:first-child {
-  word-break: break-word; 
-}
-.summary-item span:last-child {
-  white-space: nowrap; 
-  text-align: right;
-}
-.summary-total {
+
+.field {
   display: flex;
-  justify-content: space-between;
-  padding: 20px 0;
-  font-size: 1.2rem;
-  font-weight: bold;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
 }
-.place-order-button {
-  width: 100%;
-  background-color: var(--smoky-black);
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+input {
+  background: var(--surface);
+  border: 1px solid var(--border);
   color: var(--white);
-  padding: 18px 30px;
-  font-size: 1rem;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--transition);
+  text-transform: none;
+}
+input:focus { border-color: var(--gold); }
+
+/* Order section */
+.order-section {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  padding: 32px;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+
+.order-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.order-img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  background-color: var(--surface-2);
+  flex-shrink: 0;
+}
+
+.order-item-name {
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-item-qty {
+  font-size: 0.75rem;
+  color: var(--gray);
+  margin-top: 2px;
+}
+
+.order-item-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+.total-val {
+  font-size: 1.1rem;
+  color: var(--gold);
+}
+
+.place-btn {
+  width: 100%;
+  margin-top: 20px;
+  background-color: var(--gold);
+  color: var(--black);
+  padding: 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   border: none;
   cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition);
 }
-.place-order-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.place-btn:hover:not(:disabled) { background-color: var(--gold-light); }
+.place-btn:disabled { background-color: var(--border); color: var(--gray); cursor: not-allowed; }
+
+@media (max-width: 768px) {
+  .checkout-layout { grid-template-columns: 1fr; }
+  .checkout-view { padding: 80px 24px 60px; }
+  .field-row { grid-template-columns: 1fr; }
 }
 </style>

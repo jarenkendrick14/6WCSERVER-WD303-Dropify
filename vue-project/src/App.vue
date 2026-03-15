@@ -77,7 +77,7 @@ main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding-top: 95px;
+  padding-top: var(--header-h);
 }
 
 /* On login/register pages, remove the padding. */
@@ -90,7 +90,7 @@ main {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .fade-enter-from,
