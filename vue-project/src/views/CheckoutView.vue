@@ -126,7 +126,7 @@ async function placeOrder() {
 .checkout-view {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 100px 48px 80px;
+  padding: 48px 48px 80px;
   color: var(--white);
   background-color: var(--black);
   min-height: 100vh;
@@ -310,7 +310,7 @@ input:focus { border-color: var(--gold); }
 .place-btn:disabled { background-color: var(--border); color: var(--gray); cursor: not-allowed; }
 
 @media (max-width: 768px) {
-  .checkout-view { padding: 80px 16px 60px; }
+  .checkout-view { padding: 20px 14px 60px; }
   .checkout-layout { grid-template-columns: 1fr; gap: 32px; }
   .checkout-title { font-size: 2rem; }
   .field-row { grid-template-columns: 1fr; }

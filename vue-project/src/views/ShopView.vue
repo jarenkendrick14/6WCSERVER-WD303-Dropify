@@ -6,15 +6,18 @@
 
 <style scoped>
 .shop-container {
-  padding: 100px 48px 80px;
+  padding: 48px 48px 80px;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
   background-color: var(--black);
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
-  .shop-container { padding: 80px 16px 60px; }
+  .shop-container {
+    padding: 24px 14px 60px;
+  }
 }
 </style>

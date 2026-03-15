@@ -68,7 +68,7 @@
 .contact-header {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 160px 48px 60px;
+  padding: 48px 48px 48px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -91,7 +91,7 @@
 .contact-body {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 48px 120px;
+  padding: 40px 48px 80px;
   display: grid;
   grid-template-columns: 1.8fr 1fr;
   gap: 80px;
@@ -185,9 +185,9 @@ input:focus, textarea:focus { border-color: var(--gold); }
 .social-link:hover { color: var(--gold); }
 
 @media (max-width: 768px) {
-  .contact-header { padding: 100px 20px 40px; }
-  .contact-title { font-size: 3rem; }
-  .contact-body { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px 60px; }
+  .contact-header { padding: 20px 16px 28px; }
+  .contact-title { font-size: 2.8rem; }
+  .contact-body { grid-template-columns: 1fr; gap: 32px; padding: 24px 16px 60px; }
   .submit-btn { width: 100%; }
 }
 

@@ -94,10 +94,12 @@ const handleQuantityInput = (productId, event) => {
 .cart-view {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 100px 48px 80px;
+  padding: 48px 48px 80px;
   color: var(--white);
   background-color: var(--black);
   min-height: 100vh;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .cart-header-row {
@@ -328,7 +330,7 @@ const handleQuantityInput = (productId, event) => {
 .checkout-btn:hover { background-color: var(--gold-light); }
 
 @media (max-width: 768px) {
-  .cart-view { padding: 80px 16px 60px; }
+  .cart-view { padding: 20px 14px 60px; }
   .cart-body { grid-template-columns: 1fr; gap: 32px; }
   .cart-header-row { flex-direction: column; align-items: flex-start; gap: 8px; }
   .cart-title { font-size: 2rem; }

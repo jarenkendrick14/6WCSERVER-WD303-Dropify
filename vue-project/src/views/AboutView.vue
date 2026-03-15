@@ -38,7 +38,7 @@
 }
 
 .about-hero {
-  padding: 160px 48px 80px;
+  padding: 48px 48px 60px;
   border-bottom: 1px solid var(--border);
   max-width: 1280px;
   margin: 0 auto;
@@ -65,7 +65,7 @@
 .about-body {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 48px 120px;
+  padding: 48px 48px 80px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
@@ -112,9 +112,9 @@
 .about-cta:hover { color: var(--gold-light); border-color: var(--gold-light); }
 
 @media (max-width: 768px) {
-  .about-hero { padding: 100px 20px 48px; }
-  .about-title { font-size: 3rem; }
-  .about-body { grid-template-columns: 1fr; gap: 32px; padding: 48px 20px 60px; }
+  .about-hero { padding: 20px 16px 32px; }
+  .about-title { font-size: 2.8rem; }
+  .about-body { grid-template-columns: 1fr; gap: 28px; padding: 28px 16px 60px; }
 }
 
 @media (max-width: 480px) {

@@ -142,13 +142,13 @@ onMounted(fetchShirts);
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 2px;
 }
 
 .loading-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 2px;
 }
 
@@ -175,11 +175,11 @@ onMounted(fetchShirts);
 .stagger-enter-from { opacity: 0; transform: translateY(20px); }
 
 @media (max-width: 768px) {
-  .page-header { margin-bottom: 28px; padding-bottom: 20px; }
-  .page-title { font-size: 2.5rem; }
-  .filter-bar { gap: 10px; }
-  .search-wrap { width: 100%; }
-  .sort-select { width: 100%; }
+  .page-header { margin-bottom: 24px; padding-bottom: 16px; }
+  .page-title { font-size: 2.4rem; }
+  .filter-bar { flex-direction: column; gap: 8px; }
+  .search-wrap { width: 100%; max-width: 100%; box-sizing: border-box; }
+  .sort-select { width: 100%; box-sizing: border-box; }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
   .loading-grid { grid-template-columns: repeat(2, 1fr); }
 }

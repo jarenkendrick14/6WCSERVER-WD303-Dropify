@@ -423,11 +423,18 @@ onMounted(async () => {
 
 @media (max-width: 576px) {
   .product-grid { grid-template-columns: 1fr 1fr; gap: 1px; }
-  .hero-title { font-size: 4.5rem; }
+  .hero-title { font-size: 4rem; }
+  .hero-eyebrow { font-size: 0.65rem; }
+  .hero-sub { font-size: 0.88rem; margin-bottom: 32px; }
   .hero-scroll { display: none; }
   .cat-grid { grid-template-columns: 1fr; }
-  .hero-actions { flex-direction: column; align-items: center; }
-  .btn { width: 100%; max-width: 280px; text-align: center; }
-  .featured { padding: 60px 0; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+  .btn { width: 100%; max-width: 260px; text-align: center; padding: 13px 24px; }
+  .featured { padding: 48px 0; }
+  .section-container { padding: 0 14px; }
+  .manifesto { padding: 60px 16px; }
+  .manifesto-text { font-size: 1.7rem; }
+  .categories { padding: 48px 0; }
+  .cat-card { height: 200px; }
 }
 </style>
