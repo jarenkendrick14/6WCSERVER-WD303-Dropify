@@ -1,5 +1,5 @@
 // Centralized API configuration
 // Change this ONE value when switching between local dev and production
-const API_BASE_URL = 'https://sixwcserver-wd303-dropify.onrender.com';
+const API_BASE_URL = '6wcserver-wd303-dropify-production.up.railway.app';
 
 export default API_BASE_URL;
