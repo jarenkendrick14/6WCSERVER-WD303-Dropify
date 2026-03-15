@@ -29,6 +29,7 @@ const router = createRouter({
         { path: 'caps', name: 'caps', component: () => import('../views/shop/CapsView.vue') }
       ]
     },
+    { path: '/product/:id', name: 'product', component: () => import('../views/ProductDetailView.vue') },
     { path: '/cart', name: 'cart', component: () => import('../views/CartView.vue') },
     { path: '/checkout', name: 'checkout', component: () => import('../views/CheckoutView.vue') },
     

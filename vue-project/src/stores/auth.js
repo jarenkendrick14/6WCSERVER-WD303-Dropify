@@ -41,10 +41,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function register(username, password) {
+  async function register(username, email, password) {
     const notificationStore = useNotificationStore();
     try {
-      const { data } = await axios.post(`${API_BASE_URL}/api/auth/register`, { username, password });
+      const { data } = await axios.post(`${API_BASE_URL}/api/auth/register`, { username, email, password });
       
       token.value = data.token;
       user.value = { id: data._id, username: data.username, isAdmin: data.isAdmin };

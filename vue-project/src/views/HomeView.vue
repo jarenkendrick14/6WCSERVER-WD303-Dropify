@@ -82,13 +82,13 @@ onMounted(async () => {
       <div class="section-container">
         <p class="eyebrow">Browse by Category</p>
         <div class="cat-grid">
-          <RouterLink to="/shop/shirts" class="cat-card">
+          <RouterLink to="/shop/shirts" class="cat-card shirts">
             <span class="cat-label">Shirts</span>
           </RouterLink>
-          <RouterLink to="/shop/hoodies" class="cat-card">
+          <RouterLink to="/shop/hoodies" class="cat-card hoodies">
             <span class="cat-label">Hoodies</span>
           </RouterLink>
-          <RouterLink to="/shop/caps" class="cat-card">
+          <RouterLink to="/shop/caps" class="cat-card caps">
             <span class="cat-label">Caps</span>
           </RouterLink>
         </div>
@@ -125,6 +125,7 @@ onMounted(async () => {
   transform: scale(1.05);
   filter: brightness(0.4) saturate(0.3);
   transition: transform 8s ease;
+  will-change: transform;
 }
 
 .hero:hover .hero-bg { transform: scale(1.0); }
@@ -359,24 +360,46 @@ onMounted(async () => {
 
 .cat-card {
   position: relative;
-  height: 300px;
-  background-color: var(--surface-2);
+  height: 320px;
   display: flex;
   align-items: flex-end;
   padding: 28px;
   overflow: hidden;
-  transition: background-color var(--transition);
   border: 1px solid var(--border);
+  transition: border-color var(--transition);
 }
 
-.cat-card:hover {
-  background-color: var(--surface);
-  border-color: var(--gold);
+.cat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.35) saturate(0.4);
+  transition: transform 0.5s ease, filter 0.4s ease;
+  z-index: 0;
 }
+
+.cat-card.shirts::before { background-image: url('/images/product-shirt-black-1.png'); }
+.cat-card.hoodies::before { background-image: url('/images/product-hoodie-1.png'); }
+.cat-card.caps::before { background-image: url('/images/product-cap-1.png'); }
+
+.cat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  z-index: 1;
+}
+
+.cat-card:hover { border-color: var(--gold); }
+.cat-card:hover::before { transform: scale(1.06); filter: brightness(0.5) saturate(0.5); }
 
 .cat-label {
+  position: relative;
+  z-index: 2;
   font-family: var(--font-display);
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   letter-spacing: 0.06em;
   color: var(--white);
   transition: color var(--transition);
@@ -391,13 +414,20 @@ onMounted(async () => {
 
 @media (max-width: 992px) {
   .product-grid { grid-template-columns: repeat(2, 1fr); }
-  .cat-grid { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: 1fr 1fr; }
   .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .section-container { padding: 0 24px; }
+  .manifesto { padding: 80px 24px; }
+  .categories { padding: 60px 0; }
 }
 
 @media (max-width: 576px) {
-  .product-grid { grid-template-columns: 1fr; }
-  .hero-title { font-size: 5rem; }
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 1px; }
+  .hero-title { font-size: 4.5rem; }
   .hero-scroll { display: none; }
+  .cat-grid { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn { width: 100%; max-width: 280px; text-align: center; }
+  .featured { padding: 60px 0; }
 }
 </style>

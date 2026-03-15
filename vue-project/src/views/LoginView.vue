@@ -6,10 +6,9 @@ import { RouterLink } from 'vue-router';
 const authStore = useAuthStore();
 const username = ref('');
 const password = ref('');
-const isUserLogin = ref(true);
 
 function handleLogin() {
-  authStore.login(username.value, password.value, !isUserLogin.value);
+  authStore.login(username.value, password.value, false);
 }
 </script>
 
@@ -24,12 +23,7 @@ function handleLogin() {
     <div class="login-box">
       <div class="box-top">
         <RouterLink to="/" class="brand">DROPIFY</RouterLink>
-        <p class="box-tagline">{{ isUserLogin ? 'Welcome back.' : 'Admin access.' }}</p>
-      </div>
-
-      <div class="tabs">
-        <button @click="isUserLogin = true" :class="{ active: isUserLogin }">User</button>
-        <button @click="isUserLogin = false" :class="{ active: !isUserLogin }">Admin</button>
+        <p class="box-tagline">Welcome back.</p>
       </div>
 
       <form @submit.prevent="handleLogin">
@@ -44,7 +38,7 @@ function handleLogin() {
         <button type="submit" class="submit-btn">Sign In</button>
       </form>
 
-      <p v-if="isUserLogin" class="alt-link">
+      <p class="alt-link">
         No account? <RouterLink to="/register">Create one</RouterLink>
       </p>
     </div>
@@ -72,7 +66,7 @@ function handleLogin() {
   flex: 1;
   background-size: cover;
   background-position: center;
-  filter: brightness(0.35) saturate(0.2);
+  filter: brightness(0.3) saturate(0.2);
 }
 .panel-1 { background-image: url('/images/login-bg-1.png'); }
 .panel-2 { background-image: url('/images/login-bg-2.png'); }
@@ -83,7 +77,7 @@ function handleLogin() {
   z-index: 2;
   width: 100%;
   max-width: 400px;
-  background: rgba(15, 15, 15, 0.85);
+  background: rgba(12, 12, 12, 0.88);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border);
@@ -91,13 +85,11 @@ function handleLogin() {
   margin: 0 16px;
 }
 
-.box-top {
-  margin-bottom: 32px;
-}
+.box-top { margin-bottom: 36px; }
 
 .brand {
   font-family: var(--font-display);
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   color: var(--white);
   letter-spacing: 0.06em;
   display: block;
@@ -105,35 +97,9 @@ function handleLogin() {
 }
 
 .box-tagline {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--gray);
   font-weight: 300;
-}
-
-.tabs {
-  display: flex;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 32px;
-  gap: 0;
-}
-
-.tabs button {
-  flex: 1;
-  padding: 10px;
-  background: transparent;
-  color: var(--gray);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color var(--transition), border-color var(--transition);
-}
-
-.tabs button.active {
-  color: var(--gold);
-  border-bottom-color: var(--gold);
 }
 
 form {
@@ -160,36 +126,37 @@ input {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--white);
-  padding: 12px 14px;
+  padding: 13px 14px;
   font-size: 0.9rem;
   outline: none;
   transition: border-color var(--transition);
   text-transform: none;
+  width: 100%;
 }
-
 input:focus { border-color: var(--gold); }
 
 .submit-btn {
   margin-top: 8px;
   background-color: var(--gold);
   color: var(--black);
-  padding: 14px;
+  padding: 15px;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  border: none;
+  cursor: pointer;
   transition: background-color var(--transition);
+  width: 100%;
 }
-
 .submit-btn:hover { background-color: var(--gold-light); }
 
 .alt-link {
   text-align: center;
-  margin-top: 24px;
-  font-size: 0.8rem;
+  margin-top: 28px;
+  font-size: 0.82rem;
   color: var(--gray);
 }
-
 .alt-link a {
   color: var(--gold);
   font-weight: 500;

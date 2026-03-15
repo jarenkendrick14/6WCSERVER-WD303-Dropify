@@ -31,7 +31,7 @@ const isAuthPage = computed(() => route.name === 'login' || route.name === 'regi
 const routeKey = computed(() => route.path);
 
 // --- Header logic (unchanged) ---
-const isShopPage = computed(() => route.path.startsWith('/shop'));
+const isShopPage = computed(() => route.path.startsWith('/shop') || route.path.startsWith('/product'));
 const isAdminPage = computed(() => route.path.startsWith('/admin'));
 const hasLightBackground = computed(() => {
   const lightBgPaths = ['/about', '/contact', '/cart', '/checkout'];

@@ -1,6 +1,7 @@
 <script setup>
 import { useCartStore } from '../stores/cart';
 import { useNotificationStore } from '../stores/notification';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   product: { type: Object, required: true }
@@ -8,19 +9,31 @@ const props = defineProps({
 
 const cartStore = useCartStore();
 const notificationStore = useNotificationStore();
+const router = useRouter();
 
-function addItemToCart() {
+function quickAdd(e) {
+  e.stopPropagation();
   cartStore.addToCart(props.product);
   notificationStore.showNotification(`${props.product.name} added to cart`);
+}
+
+function goToProduct() {
+  router.push({ name: 'product', params: { id: props.product._id } });
 }
 </script>
 
 <template>
-  <div class="product-card">
+  <div class="product-card" @click="goToProduct">
     <div class="image-wrap">
-      <img :src="product.image" :alt="product.name" class="product-img">
+      <img
+        :src="product.image"
+        :alt="product.name"
+        class="product-img"
+        loading="lazy"
+        @error="$event.target.src = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22><rect width=%22400%22 height=%22400%22 fill=%22%231A1A1A%22/><text x=%22200%22 y=%22210%22 font-family=%22sans-serif%22 font-size=%2214%22 fill=%22%23555%22 text-anchor=%22middle%22>No Image</text></svg>'"
+      >
       <div class="card-overlay">
-        <button @click="addItemToCart" class="add-btn">Add to Cart</button>
+        <button @click="quickAdd" class="add-btn">Quick Add</button>
       </div>
     </div>
     <div class="product-info">
@@ -71,7 +84,7 @@ function addItemToCart() {
   background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: flex-end;
-  padding: 20px;
+  padding: 16px;
   opacity: 0;
   transition: opacity var(--transition);
 }
@@ -84,16 +97,15 @@ function addItemToCart() {
   width: 100%;
   background-color: var(--gold);
   color: var(--black);
-  padding: 12px;
-  font-size: 0.75rem;
+  padding: 11px;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border: none;
   cursor: pointer;
-  transition: background-color var(--transition);
+  transition: background-color var(--transition), transform 0.3s ease;
   transform: translateY(8px);
-  transition: transform 0.3s ease, background-color var(--transition);
 }
 
 .product-card:hover .add-btn {
@@ -105,26 +117,29 @@ function addItemToCart() {
 }
 
 .product-info {
-  padding: 16px 18px;
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .product-name {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--white);
   flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 8px;
 }
 
 .product-price {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--gold);
   white-space: nowrap;
-  margin-left: 12px;
 }
 </style>

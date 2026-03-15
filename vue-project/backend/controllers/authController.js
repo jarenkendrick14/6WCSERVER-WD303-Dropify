@@ -11,14 +11,14 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 const registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
   try {
     const userExists = await User.findOne({ username: { $regex: new RegExp(`^${username}$`, 'i') } });
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const user = await User.create({ username, password });
+    const user = await User.create({ username, email: email || '', password });
     res.status(201).json({
       _id: user._id,
       username: user.username,

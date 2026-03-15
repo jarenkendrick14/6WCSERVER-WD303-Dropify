@@ -19,7 +19,7 @@
         <span class="footer-heading">Info</span>
         <p>WD — 303</p>
         <p>Angeles City, Philippines</p>
-        <p class="footer-copy">&copy; 2025 Dropify. All rights reserved.</p>
+        <p class="footer-copy">&copy; 2026 Dropify. All rights reserved.</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -90,8 +90,7 @@
 .footer-copy {
   margin-top: 12px;
   font-size: 0.75rem !important;
-  color: var(--border) !important;
-  opacity: 0.8;
+  color: var(--gray) !important;
 }
 
 .footer-bottom {
@@ -100,7 +99,7 @@
   max-width: 1200px;
   margin: 0 auto;
   font-size: 0.75rem;
-  color: var(--border);
+  color: var(--gray);
   text-align: center;
   width: 100%;
 }

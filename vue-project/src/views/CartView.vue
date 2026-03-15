@@ -107,6 +107,8 @@ const handleQuantityInput = (productId, event) => {
   margin-bottom: 48px;
   padding-bottom: 32px;
   border-bottom: 1px solid var(--border);
+  gap: 32px;
+  flex-wrap: wrap;
 }
 
 .eyebrow {

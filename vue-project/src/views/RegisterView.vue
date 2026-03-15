@@ -5,14 +5,14 @@ import { RouterLink } from 'vue-router';
 
 const authStore = useAuthStore();
 const username = ref('');
+const email = ref('');
 const password = ref('');
 
 function handleRegister() {
-  if (!username.value || !password.value) {
-    alert('Please enter a username and password.');
+  if (!username.value || !email.value || !password.value) {
     return;
   }
-  authStore.register(username.value, password.value);
+  authStore.register(username.value, email.value, password.value);
 }
 </script>
 
@@ -34,6 +34,10 @@ function handleRegister() {
         <div class="field">
           <label>Username</label>
           <input type="text" v-model="username" required autocomplete="username" />
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" v-model="email" required autocomplete="email" placeholder="you@example.com" />
         </div>
         <div class="field">
           <label>Password</label>
@@ -68,7 +72,7 @@ function handleRegister() {
   flex: 1;
   background-size: cover;
   background-position: center;
-  filter: brightness(0.35) saturate(0.2);
+  filter: brightness(0.3) saturate(0.2);
 }
 .panel-1 { background-image: url('/images/login-bg-1.png'); }
 .panel-2 { background-image: url('/images/login-bg-2.png'); }
@@ -79,7 +83,7 @@ function handleRegister() {
   z-index: 2;
   width: 100%;
   max-width: 400px;
-  background: rgba(15, 15, 15, 0.85);
+  background: rgba(12, 12, 12, 0.88);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border);
@@ -87,11 +91,11 @@ function handleRegister() {
   margin: 0 16px;
 }
 
-.box-top { margin-bottom: 32px; }
+.box-top { margin-bottom: 36px; }
 
 .brand {
   font-family: var(--font-display);
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   color: var(--white);
   letter-spacing: 0.06em;
   display: block;
@@ -99,7 +103,7 @@ function handleRegister() {
 }
 
 .box-tagline {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--gray);
   font-weight: 300;
 }
@@ -128,38 +132,38 @@ input {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--white);
-  padding: 12px 14px;
+  padding: 13px 14px;
   font-size: 0.9rem;
   outline: none;
   transition: border-color var(--transition);
   text-transform: none;
+  width: 100%;
 }
-
+input::placeholder { color: var(--gray); }
 input:focus { border-color: var(--gold); }
 
 .submit-btn {
   margin-top: 8px;
   background-color: var(--gold);
   color: var(--black);
-  padding: 14px;
+  padding: 15px;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: background-color var(--transition);
   border: none;
   cursor: pointer;
+  transition: background-color var(--transition);
+  width: 100%;
 }
-
 .submit-btn:hover { background-color: var(--gold-light); }
 
 .alt-link {
   text-align: center;
-  margin-top: 24px;
-  font-size: 0.8rem;
+  margin-top: 28px;
+  font-size: 0.82rem;
   color: var(--gray);
 }
-
 .alt-link a {
   color: var(--gold);
   font-weight: 500;

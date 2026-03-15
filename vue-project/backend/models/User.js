@@ -17,6 +17,7 @@ const cartItemSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
+  email: { type: String, default: '' },
   password: { type: String, required: true, select: false },
   isAdmin: { type: Boolean, required: true, default: false },
   cart: [cartItemSchema],
