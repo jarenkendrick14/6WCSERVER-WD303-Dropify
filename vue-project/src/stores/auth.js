@@ -13,6 +13,11 @@ export const useAuthStore = defineStore('auth', () => {
   const isLoggedIn = computed(() => !!token.value)
   const isAdmin = computed(() => user.value?.isAdmin === true)
 
+  function getPostAuthDestination(fallbackPath) {
+    const redirect = router.currentRoute.value.query.redirect;
+    return typeof redirect === 'string' && redirect.startsWith('/') ? redirect : fallbackPath;
+  }
+
   async function login(username, password, isAdminLogin = false) {
     const notificationStore = useNotificationStore();
     try {
@@ -31,11 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       notificationStore.showNotification(`Welcome back, ${data.username}!`);
 
-      if (data.isAdmin) {
-        router.push('/admin');
-      } else {
-        router.push('/');
-      }
+      router.push(getPostAuthDestination(data.isAdmin ? '/admin' : '/'));
     } catch (error) {
       notificationStore.showNotification('Login failed: Invalid username or password.', 'error');
     }
@@ -54,7 +55,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       notificationStore.showNotification(`Account created! Welcome, ${data.username}!`);
 
-      router.push('/');
+      router.push(getPostAuthDestination('/'));
     } catch (error) {
       const message = error.response?.data?.message || 'Please try again.';
       notificationStore.showNotification(`Registration failed: ${message}`, 'error');
@@ -62,9 +63,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function logout() {
+    const cartStore = useCartStore();
+    cartStore.resetCart();
     user.value = null;
     token.value = null;
-    router.push('/login');
+    router.push('/');
   }
 
   return { user, token, isLoggedIn, isAdmin, login, register, logout }

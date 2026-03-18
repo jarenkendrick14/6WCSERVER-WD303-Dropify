@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 
@@ -16,7 +16,7 @@ const password = ref('');
 
 // Keep URL in sync
 watch(mode, (val) => {
-  router.replace({ name: val });
+  router.replace({ name: val, query: route.query });
 });
 
 watch(() => route.name, (val) => {

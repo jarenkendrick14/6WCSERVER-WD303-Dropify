@@ -1,12 +1,11 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { RouterLink, useRouter } from 'vue-router';
+import { RouterLink } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const router = useRouter();
 
 const props = defineProps({
   mode: { type: String, default: 'default' },
@@ -60,16 +59,22 @@ function logout() {
       </div>
 
       <div class="nav-right">
-        <span v-if="authStore.user" class="welcome desktop-only">{{ authStore.user.username }}</span>
-        <a href="#" @click.prevent="logout" class="logout-link desktop-only">Logout</a>
-        <RouterLink v-if="mode !== 'admin'" to="/cart" class="cart-link" @click="closeMenu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
-          <span v-if="cartStore.totalItems > 0" class="cart-badge">{{ cartStore.totalItems }}</span>
-        </RouterLink>
+        <template v-if="authStore.isLoggedIn">
+          <span v-if="authStore.user" class="welcome desktop-only">{{ authStore.user.username }}</span>
+          <a href="#" @click.prevent="logout" class="logout-link desktop-only">Logout</a>
+          <RouterLink v-if="mode !== 'admin'" to="/cart" class="cart-link" @click="closeMenu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span v-if="cartStore.totalItems > 0" class="cart-badge">{{ cartStore.totalItems }}</span>
+          </RouterLink>
+        </template>
+        <template v-else>
+          <RouterLink to="/login" class="auth-link desktop-only" @click="closeMenu">Sign In</RouterLink>
+          <RouterLink to="/register" class="auth-cta desktop-only" @click="closeMenu">Create Account</RouterLink>
+        </template>
 
         <!-- Hamburger -->
         <button class="hamburger mobile-only" @click="toggleMenu" :class="{ open: menuOpen }" aria-label="Menu">
@@ -100,8 +105,14 @@ function logout() {
             <RouterLink to="/shop" @click="closeMenu">View Site</RouterLink>
           </div>
           <div class="mobile-footer">
-            <span v-if="authStore.user" class="mobile-user">Signed in as {{ authStore.user.username }}</span>
-            <a href="#" @click.prevent="logout" class="mobile-logout">Sign Out</a>
+            <template v-if="authStore.isLoggedIn">
+              <span v-if="authStore.user" class="mobile-user">Signed in as {{ authStore.user.username }}</span>
+              <a href="#" @click.prevent="logout" class="mobile-logout">Sign Out</a>
+            </template>
+            <template v-else>
+              <RouterLink to="/login" class="mobile-auth" @click="closeMenu">Sign In</RouterLink>
+              <RouterLink to="/register" class="mobile-auth secondary" @click="closeMenu">Create Account</RouterLink>
+            </template>
           </div>
         </div>
       </div>
@@ -224,6 +235,27 @@ function logout() {
 }
 .logout-link:hover { color: var(--white); }
 
+.auth-link,
+.auth-cta {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color var(--transition), border-color var(--transition), background-color var(--transition);
+}
+
+.auth-link {
+  color: var(--gray);
+}
+.auth-link:hover { color: var(--white); }
+
+.auth-cta {
+  color: var(--black);
+  background-color: var(--gold);
+  padding: 10px 14px;
+}
+.auth-cta:hover { background-color: var(--gold-light); }
+
 .cart-link {
   position: relative;
   display: flex;
@@ -329,6 +361,18 @@ function logout() {
   text-transform: uppercase;
   color: var(--red);
   cursor: pointer;
+}
+
+.mobile-auth {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.mobile-auth.secondary {
+  color: var(--gold);
 }
 
 /* Transition */

@@ -1,6 +1,5 @@
 <script setup>
 import { useCartStore } from '../stores/cart';
-import { useNotificationStore } from '../stores/notification';
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
@@ -8,13 +7,11 @@ const props = defineProps({
 });
 
 const cartStore = useCartStore();
-const notificationStore = useNotificationStore();
 const router = useRouter();
 
 function quickAdd(e) {
   e.stopPropagation();
   cartStore.addToCart(props.product);
-  notificationStore.showNotification(`${props.product.name} added to cart`);
 }
 
 function goToProduct() {

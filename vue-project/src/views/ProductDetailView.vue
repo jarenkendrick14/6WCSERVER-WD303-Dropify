@@ -37,7 +37,6 @@ function handleAddToCart() {
     return;
   }
   cartStore.addToCart(product.value);
-  notificationStore.showNotification(`${product.value.name} added to cart`);
 }
 </script>
 
