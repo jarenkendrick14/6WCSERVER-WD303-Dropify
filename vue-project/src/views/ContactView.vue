@@ -30,6 +30,7 @@
 
         <div class="info-block">
           <p class="info-label">Email</p>
+          <p>jaren@dropify.com</p>
           <p>ken@dropify.com</p>
           <p>mika@dropify.com</p>
           <p>dj@dropify.com</p>
